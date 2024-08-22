@@ -1,16 +1,14 @@
 import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common'
 import { CreatePlayerDto } from './dto/create-player.dto'
 import { PlayersService } from './players.service'
-import { IPlayer } from './interfaces/IPlayer.interface'
+import { Player } from './interfaces/player.interface'
 
 @Controller('players')
 export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
   @Get()
-  async listPlayers(
-    @Query('email') email: string,
-  ): Promise<IPlayer[] | IPlayer> {
+  async listPlayers(@Query('email') email: string): Promise<Player[] | Player> {
     if (email) {
       return await this.playersService.findByEmail(email)
     } else {
