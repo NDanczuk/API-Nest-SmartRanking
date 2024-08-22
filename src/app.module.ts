@@ -3,9 +3,10 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { PlayersModule } from './players/players.module'
 import { PlayersController } from './players/players.controller'
+import { PlayersService } from './players/players.service'
 @Module({
   imports: [PlayersModule],
   controllers: [AppController, PlayersController],
-  providers: [AppService],
+  providers: [AppService, PlayersService],
 })
 export class AppModule {}
