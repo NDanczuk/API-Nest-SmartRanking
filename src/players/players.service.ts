@@ -14,8 +14,17 @@ export class PlayersService {
   }
 
   async createUpdatePlayer(createPlayerDto: CreatePlayerDto): Promise<void> {
-    this.logger.log(`createPlayerDto: ${createPlayerDto}`)
-    await this.create(createPlayerDto)
+    const { email } = createPlayerDto
+
+    const foundPlayer = await this.players.find(
+      player => player.email === email,
+    )
+
+    if (foundPlayer) {
+      await this.update(foundPlayer, createPlayerDto)
+    } else {
+      await this.create(createPlayerDto)
+    }
   }
 
   private create(createPlayerDto: CreatePlayerDto): void {
@@ -32,5 +41,10 @@ export class PlayersService {
     }
     this.logger.log(`createPlayerDto: ${JSON.stringify(player)}`)
     this.players.push(player)
+  }
+
+  private update(foundPlayer: IPlayer, createPlayerDto: CreatePlayerDto) {
+    const { name } = createPlayerDto
+    foundPlayer.name = name
   }
 }
