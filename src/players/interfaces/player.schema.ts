@@ -9,5 +9,5 @@ export const PlayerSchema = new Schema(
     rankingPosition: Number,
     urlPlayerAvatar: String,
   },
-  { timestamps: true },
+  { timestamps: true, collection: 'players' },
 )

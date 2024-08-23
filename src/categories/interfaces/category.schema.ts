@@ -18,5 +18,5 @@ export const CategorySchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true },
+  { timestamps: true, collection: 'players' },
 )
