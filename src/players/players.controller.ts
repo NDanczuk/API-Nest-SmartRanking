@@ -3,12 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
-  Query,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common'
 import { CreatePlayerDto } from './dto/create-player.dto'
+import { UpdatePlayerDto } from './dto/update-player.dto'
 import { PlayersService } from './players.service'
 import { Player } from './interfaces/player.interface'
 import { PlayersValidationParamsPipe } from './pipes/player-validation-params.pipe'
@@ -18,26 +20,38 @@ export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
   @Get()
-  async listPlayers(
-    @Query('email', PlayersValidationParamsPipe) email: string,
-  ): Promise<Player[] | Player> {
-    if (email) {
-      return await this.playersService.findByEmail(email)
-    } else {
-      return await this.playersService.listPlayers()
-    }
+  async getAllPlayers(): Promise<Player[]> {
+    return await this.playersService.getAllPlayers()
+  }
+
+  @Get('/:_id')
+  async getPlayerById(
+    @Param('_id', PlayersValidationParamsPipe) _id: string,
+  ): Promise<Player> {
+    return await this.playersService.getPlayerById(_id)
   }
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createUpdatePlayer(@Body() createPlayerDto: CreatePlayerDto) {
-    await this.playersService.createUpdatePlayer(createPlayerDto)
+  async createPlayer(
+    @Body() createPlayerDto: CreatePlayerDto,
+  ): Promise<Player> {
+    return await this.playersService.createPlayer(createPlayerDto)
   }
 
-  @Delete()
+  @Put('/:_id')
+  @UsePipes(ValidationPipe)
+  async updatePlayer(
+    @Body() updatePlayerDto: UpdatePlayerDto,
+    @Param('_id', PlayersValidationParamsPipe) _id: string,
+  ): Promise<Player> {
+    return await this.playersService.updatePlayer(_id, updatePlayerDto)
+  }
+
+  @Delete('/:_id')
   async deletePlayer(
-    @Query('email', PlayersValidationParamsPipe) email: string,
+    @Param('_id', PlayersValidationParamsPipe) _id: string,
   ): Promise<void> {
-    this.playersService.deletePlayer(email)
+    return await this.playersService.deletePlayer(_id)
   }
 }
