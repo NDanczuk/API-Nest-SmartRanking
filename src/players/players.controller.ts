@@ -13,7 +13,7 @@ import { CreatePlayerDto } from './dto/create-player.dto'
 import { UpdatePlayerDto } from './dto/update-player.dto'
 import { PlayersService } from './players.service'
 import { Player } from './interfaces/player.interface'
-import { PlayersValidationParamsPipe } from './pipes/player-validation-params.pipe'
+import { PlayersValidationParamsPipe } from '../shared/pipes/player-validation-params.pipe'
 
 @Controller('players')
 export class PlayersController {
