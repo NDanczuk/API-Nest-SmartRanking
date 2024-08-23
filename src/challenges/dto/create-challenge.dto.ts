@@ -15,6 +15,9 @@ export class CreateChallengeDto {
   @IsNotEmpty()
   applicant: Player
 
+  @IsNotEmpty()
+  challenged: Player
+
   @IsArray()
   @ArrayMinSize(2)
   @ArrayMaxSize(2)

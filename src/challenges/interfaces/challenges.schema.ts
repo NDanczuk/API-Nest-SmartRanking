@@ -7,6 +7,7 @@ export const ChallengeSchema = new mongoose.Schema(
     dateTimeSolicitation: { type: Date },
     dateTimeAnswer: { type: Date },
     applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+    challenged: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
     category: { type: String },
     players: [
       {
