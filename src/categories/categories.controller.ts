@@ -28,4 +28,14 @@ export class CategoriesController {
   async listCategories(): Promise<Array<Category>> {
     return await this.categoriesService.listAll()
   }
+
+  @Get('/:category')
+  async findById(@Param('category') category: string): Promise<Category> {
+    return await this.categoriesService.findById(category)
+  }
+
+  @Delete('/:category')
+  async deleteCategory(@Param('category') category: string): Promise<Category> {
+    return await this.categoriesService.deleteCategory(category)
+  }
 }

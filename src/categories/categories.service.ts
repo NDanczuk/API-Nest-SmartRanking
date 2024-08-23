@@ -14,6 +14,7 @@ export class CategoriesService {
     @InjectModel('Category') private readonly categoryModel: Model<Category>,
   ) {}
 
+  // Create category
   async createCategory(
     createCategoryDto: CreateCategoryDto,
   ): Promise<Category> {
@@ -29,7 +30,32 @@ export class CategoriesService {
     return await createdCategory.save()
   }
 
+  // Get all
   async listAll(): Promise<Array<Category>> {
     return await this.categoryModel.find().exec()
+  }
+
+  // Find one
+  async findById(category: string): Promise<Category> {
+    const foundCategory = await this.categoryModel.findOne({ category }).exec()
+
+    if (!foundCategory) {
+      throw new NotFoundException(`Category ${category} not found!`)
+    }
+
+    return foundCategory
+  }
+
+  //Delete
+  async deleteCategory(category): Promise<Category> {
+    const foundCategory = await this.categoryModel.findOne({ category }).exec()
+
+    if (!foundCategory) {
+      throw new NotFoundException(`Category ${category} not found!`)
+    }
+
+    await foundCategory.deleteOne()
+
+    return foundCategory
   }
 }
