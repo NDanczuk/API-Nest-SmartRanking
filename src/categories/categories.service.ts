@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { Category } from './interfaces/category.interface'
@@ -23,5 +27,9 @@ export class CategoriesService {
 
     const createdCategory = new this.categoryModel(createCategoryDto)
     return await createdCategory.save()
+  }
+
+  async listAll(): Promise<Array<Category>> {
+    return await this.categoryModel.find().exec()
   }
 }
