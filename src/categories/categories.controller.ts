@@ -51,4 +51,9 @@ export class CategoriesController {
       updateCategoryDto,
     )
   }
+
+  @Post('/:category/players/:playerId')
+  async addPlayerCategory(@Param() params: string[]): Promise<void> {
+    return await this.categoriesService.addPlayerCategory(params)
+  }
 }

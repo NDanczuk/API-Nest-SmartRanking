@@ -20,7 +20,7 @@ export class PlayersService {
   public async getAllPlayers(): Promise<Player[]> {
     return this.playerModel.find()
   }
-  //Find by email
+  //Find by id
   async getPlayerById(_id): Promise<Player> {
     const user = await this.playerModel.findOne({ _id })
     if (!user) {
