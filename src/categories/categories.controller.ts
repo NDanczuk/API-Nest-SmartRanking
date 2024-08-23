@@ -13,6 +13,7 @@ import { Category } from './interfaces/category.interface'
 import { CreateCategoryDto } from './dto/create-category.dto'
 import { CategoriesService } from './categories.service'
 import { UpdateCategoryDto } from './dto/update-category.sto'
+import { ValidationParamsPipe } from 'src/shared/pipes/validation-params.pipe'
 
 @Controller('categories')
 export class CategoriesController {
@@ -32,19 +33,23 @@ export class CategoriesController {
   }
 
   @Get('/:category')
-  async findById(@Param('category') category: string): Promise<Category> {
+  async findById(
+    @Param('category', ValidationParamsPipe) category: string,
+  ): Promise<Category> {
     return await this.categoriesService.findById(category)
   }
 
   @Delete('/:category')
-  async deleteCategory(@Param('category') category: string): Promise<Category> {
+  async deleteCategory(
+    @Param('category', ValidationParamsPipe) category: string,
+  ): Promise<Category> {
     return await this.categoriesService.deleteCategory(category)
   }
 
   @Put('/:category')
   async updateCategory(
     @Body() updateCategoryDto: UpdateCategoryDto,
-    @Param('category') category: string,
+    @Param('category', ValidationParamsPipe) category: string,
   ): Promise<Category> {
     return await this.categoriesService.updateCategory(
       category,
@@ -53,7 +58,9 @@ export class CategoriesController {
   }
 
   @Post('/:category/players/:playerId')
-  async addPlayerCategory(@Param() params: string[]): Promise<void> {
+  async addPlayerCategory(
+    @Param(ValidationParamsPipe) params: string[],
+  ): Promise<void> {
     return await this.categoriesService.addPlayerCategory(params)
   }
 }
