@@ -11,6 +11,7 @@ import { CreateChallengeDto } from './dto/create-challenge.dto'
 import { PlayersService } from 'src/players/players.service'
 import { CategoriesService } from 'src/categories/categories.service'
 import { ChallengeStatus } from './interfaces/challenge-status.enum'
+import { UpdateChallengeDto } from './dto/update-challenge.dto'
 
 @Injectable()
 export class ChallengesService {
@@ -75,6 +76,7 @@ export class ChallengesService {
       .exec()
   }
 
+  // Get challenges
   async getPlayerChallenges(_id: any): Promise<Array<Challenge>> {
     const players = await this.playersService.getAllPlayers()
 
@@ -91,6 +93,28 @@ export class ChallengesService {
       .populate('applicant')
       .populate('players')
       .populate('match')
+      .exec()
+  }
+
+  // Update challenge
+  async updateChallenge(
+    _id: string,
+    updateChallengeDto: UpdateChallengeDto,
+  ): Promise<void> {
+    const foundChallenge = await this.challengeModel.findById(_id).exec()
+
+    if (!foundChallenge) {
+      throw new NotFoundException(`Challenge ${_id} not found!`)
+    }
+
+    if (updateChallengeDto.status) {
+      foundChallenge.dateTimeAnswer = new Date()
+    }
+    foundChallenge.status = updateChallengeDto.status
+    foundChallenge.dateTimeAnswer = updateChallengeDto.dateTimeChallenge
+
+    await this.challengeModel
+      .findOneAndUpdate({ _id }, { $set: foundChallenge })
       .exec()
   }
 }
