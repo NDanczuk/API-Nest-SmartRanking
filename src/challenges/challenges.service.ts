@@ -65,4 +65,32 @@ export class ChallengesService {
     this.logger.log(`createdChallenge: ${JSON.stringify(createdChallenge)}`)
     return await createdChallenge.save()
   }
+
+  async getAllChallenges(): Promise<Array<Challenge>> {
+    return await this.challengeModel
+      .find()
+      .populate('applicant')
+      .populate('players')
+      .populate('match')
+      .exec()
+  }
+
+  async getPlayerChallenges(_id: any): Promise<Array<Challenge>> {
+    const players = await this.playersService.getAllPlayers()
+
+    const playerFilter = players.filter(player => player.id == _id)
+
+    if (playerFilter.length == 0) {
+      throw new BadRequestException(`ID ${_id} is not a player!`)
+    }
+
+    return await this.challengeModel
+      .find()
+      .where('players')
+      .in(_id)
+      .populate('applicant')
+      .populate('players')
+      .populate('match')
+      .exec()
+  }
 }
