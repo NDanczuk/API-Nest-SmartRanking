@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ChallengeSchema } from './interfaces/challenges.schema'
 import { PlayersModule } from 'src/players/players.module'
 import { CategoriesModule } from 'src/categories/categories.module'
+import { MatchSchema } from './interfaces/match.schema'
 
 @Module({
   imports: [
@@ -12,6 +13,10 @@ import { CategoriesModule } from 'src/categories/categories.module'
       {
         name: 'Challenge',
         schema: ChallengeSchema,
+      },
+      {
+        name: 'Match',
+        schema: MatchSchema,
       },
     ]),
     PlayersModule,
