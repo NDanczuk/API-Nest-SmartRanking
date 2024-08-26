@@ -117,4 +117,19 @@ export class CategoriesService {
       .findOneAndUpdate({ category }, { $set: foundCategory })
       .exec()
   }
+
+  async getPlayerCategory(playerId: any): Promise<Category> {
+    const players = await this.playersService.getAllPlayers()
+
+    const playersFilter = players.filter(player => player._id == playerId)
+
+    if (playersFilter.length == 0) {
+      throw new BadRequestException(`ID ${playerId} is not a player!`)
+    }
+    return await this.categoryModel
+      .findOne()
+      .where('players')
+      .in(playerId)
+      .exec()
+  }
 }

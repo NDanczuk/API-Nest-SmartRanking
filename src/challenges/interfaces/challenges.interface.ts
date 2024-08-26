@@ -10,7 +10,6 @@ export interface Challenge extends Document {
   dateTimeSolicitation: Date
   dateTimeAnswer: Date
   applicant: Player
-  challenged: Player
   category: string
   players: Array<Player>
   match: Match

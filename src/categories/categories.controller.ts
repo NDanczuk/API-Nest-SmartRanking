@@ -63,4 +63,11 @@ export class CategoriesController {
   ): Promise<void> {
     return await this.categoriesService.addPlayerCategory(params)
   }
+
+  @Get('/test/:_id')
+  async getPlayerCategory(
+    @Param(ValidationParamsPipe) _id: string,
+  ): Promise<Category> {
+    return await this.categoriesService.getPlayerCategory(_id)
+  }
 }
