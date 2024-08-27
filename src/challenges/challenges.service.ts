@@ -21,6 +21,7 @@ export class ChallengesService {
   constructor(
     @InjectModel('Challenge')
     private readonly challengeModel: Model<Challenge>,
+    @InjectModel('Match')
     private readonly matchModel: Model<Match>,
     private readonly playersService: PlayersService,
     private readonly categoriesService: CategoriesService,
