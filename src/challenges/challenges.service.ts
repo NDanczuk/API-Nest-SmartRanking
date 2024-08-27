@@ -71,6 +71,7 @@ export class ChallengesService {
     return await createdChallenge.save()
   }
 
+  // Get challenges
   async getAllChallenges(): Promise<Array<Challenge>> {
     return await this.challengeModel
       .find()
